@@ -1,0 +1,44 @@
+add_new#:#Option-Eintrag hinzufügen
+common_actions#:#Aktionen
+common_cancel#:#Abbrechen
+common_create#:#Speichern
+common_download#:#Herunterladen
+common_edit#:#Bearbeiten
+common_edit_file_copy_right_option#:#Datei Option bearbeiten
+common_title#:#Titel
+common_change#:#Option ändern
+common_files_option_change#:#Dateinoption ändern
+conf_form_title#:#Option erstellen
+edit_form_title#:#Datei Option bearbeiten
+list_title#:#Option-Einträge
+list_files_filter#:#List der Dateien
+info_text#:#Info Text
+option_active#:#Ist Active
+option_default#:#Standard
+msg_no_default_option#:#Keine Standardoption bestimmt!
+msg_wrong_default_option#:#Sie können nicht inaktive Option als Standaed speichern!
+msg_set_inactive#:#Sie können nicht Standaedoption als inaktive speichern!
+msg_no_permission#:#Sie können die Dateioption nict aktualisieren, die Sie nicht haben.
+option_added#:#Option wurde hinzugefügt
+option_title#:#Titel
+option_updated#:#Option wurde aktualisiert
+select_all#:#Alle
+select_without_option#:#Ohne Option
+select_list_change_from#:#Änder Option von
+select_list_change_to#:#zu
+select_list_title#:#Copy Right
+text_file_desc#:#Hier können Sie persönliche Dateien finden
+text_file_tab#:#Meine Dateien
+text_tab#:#Option-Einträge bearbeiten
+used_in#:#Benutzt in
+information_file#:#Informtion Datei
+post_file#:#Post Datei
+peer_feedback#:#Peer-Feedback
+exc_fb_file#:#Feedback Datei
+question_page#:#Frage Seite
+question_file#:#Frage Datei
+email_attachment#:#E-Mail Anhang
+suggested_solution#:#Inhalt zur Wiederholung
+content_page#:#Inhaltseite
+content_start_page#:#Inhaltersteseite
+test_solution#:#Test Lösung

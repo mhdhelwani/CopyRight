@@ -1,0 +1,44 @@
+add_new#:#Add Option
+common_actions#:#Actions
+common_cancel#:#Cancel
+common_create#:#Save
+common_download#:#Download
+common_edit#:#Edit
+common_edit_file_copy_right_option#:#Edit File Option
+common_title#:#Title
+common_change#:#Option Change
+common_files_option_change#:#Files option change
+conf_form_title#:#Add New Option
+edit_form_title#:#Edit File Option
+list_title#:#Option Entries
+list_files_filter#:#List of files
+info_text#:#Info Text
+option_active#:#Is Active
+option_default#:#Is Default
+msg_no_default_option#:#No default option specified!
+msg_wrong_default_option#:#You can't set inactive option as default!
+msg_set_inactive#:#You can't set default option as inactive!
+msg_no_permission#:#You can't update file option that you don't have.
+option_added#:#Option added
+option_title#:#Title
+option_updated#:#Option updated
+select_all#:#All
+select_without_option#:#Without Option
+select_list_change_from#:#Change option from
+select_list_change_to#:#to
+select_list_title#:#Copy Right
+text_file_desc#:#Here you find your file list
+text_file_tab#:#My File
+text_tab#:#Edit Option Entries
+used_in#:#Used In
+information_file#:#Informtion File
+post_file#:#Post File
+peer_feedback#:#Peer Feedback
+exc_fb_file#:#Feedback File
+question_page#:#Question Page
+question_file#:#Question File
+email_attachment#:#Email Attachment
+suggested_solution#:#Content for Recapitulation
+content_page#:#Content page
+content_start_page#:#Content start page
+test_solution#:#Test Solution
