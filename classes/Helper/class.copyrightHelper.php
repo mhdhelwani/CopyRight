@@ -1092,40 +1092,42 @@ class copyrightHelper
 
                     $bookObjs = ilBookingObject::getList($row["obj_id"]);
 
-                    foreach ($bookObjs as $bookObj) {
-                        $array_index = $row["obj_id"] . ":" . $bookObj["booking_object_id"] . ":" . "book_info_file";
-                        $file_list[$array_index]["title"] = $bookObj["info_file"];
-                        $file_list[$array_index]["option_id"] = self::_getCopyRightValue(
-                            $row["obj_id"],
-                            $bookObj["booking_object_id"],
-                            "book_info_file");
-                        $file_list[$array_index]["used_in"] .= "<li>" . $obj_type . " (" . self::_buildPath(
-                                $tree,
-                                $row["ref_id"],
-                                "",
-                                true) .
-                            " &raquo; " . $bookObj["title"] . " &raquo; " .
-                            $copyRightPlugin->txt("information_file") . ")</li>";
-                        $file_list[$array_index]["parent"][$row["ref_id"]][$row["type"]] = $obj_type .
-                            " (" . $row["title"] . ")";
-                        $file_list[$array_index]["parent"][$row["ref_id"]]["type_title"] = $obj_type;
+                    if ($row["owner"] == $a_user_id) {
+                        foreach ($bookObjs as $bookObj) {
+                            $array_index = $row["obj_id"] . ":" . $bookObj["booking_object_id"] . ":" . "book_info_file";
+                            $file_list[$array_index]["title"] = $bookObj["info_file"];
+                            $file_list[$array_index]["option_id"] = self::_getCopyRightValue(
+                                $row["obj_id"],
+                                $bookObj["booking_object_id"],
+                                "book_info_file");
+                            $file_list[$array_index]["used_in"] .= "<li>" . $obj_type . " (" . self::_buildPath(
+                                    $tree,
+                                    $row["ref_id"],
+                                    "",
+                                    true) .
+                                " &raquo; " . $bookObj["title"] . " &raquo; " .
+                                $copyRightPlugin->txt("information_file") . ")</li>";
+                            $file_list[$array_index]["parent"][$row["ref_id"]][$row["type"]] = $obj_type .
+                                " (" . $row["title"] . ")";
+                            $file_list[$array_index]["parent"][$row["ref_id"]]["type_title"] = $obj_type;
 
-                        $array_index = $row["obj_id"] . ":" . $bookObj["booking_object_id"] . ":" . "book_post_file";
-                        $file_list[$array_index]["title"] = $bookObj["post_file"];
-                        $file_list[$array_index]["option_id"] = self::_getCopyRightValue(
-                            $row["obj_id"],
-                            $bookObj["booking_object_id"],
-                            "book_post_file");
-                        $file_list[$array_index]["used_in"] .= "<li>" . $obj_type . " (" . self::_buildPath(
-                                $tree,
-                                $row["ref_id"],
-                                "",
-                                true) .
-                            " &raquo; " . $bookObj["title"] . " &raquo; " .
-                            $copyRightPlugin->txt("post_file") . ")</li>";
-                        $file_list[$array_index]["parent"][$row["ref_id"]][$row["type"]] = $obj_type .
-                            " (" . $row["title"] . ")";
-                        $file_list[$array_index]["parent"][$row["ref_id"]]["type_title"] = $obj_type;
+                            $array_index = $row["obj_id"] . ":" . $bookObj["booking_object_id"] . ":" . "book_post_file";
+                            $file_list[$array_index]["title"] = $bookObj["post_file"];
+                            $file_list[$array_index]["option_id"] = self::_getCopyRightValue(
+                                $row["obj_id"],
+                                $bookObj["booking_object_id"],
+                                "book_post_file");
+                            $file_list[$array_index]["used_in"] .= "<li>" . $obj_type . " (" . self::_buildPath(
+                                    $tree,
+                                    $row["ref_id"],
+                                    "",
+                                    true) .
+                                " &raquo; " . $bookObj["title"] . " &raquo; " .
+                                $copyRightPlugin->txt("post_file") . ")</li>";
+                            $file_list[$array_index]["parent"][$row["ref_id"]][$row["type"]] = $obj_type .
+                                " (" . $row["title"] . ")";
+                            $file_list[$array_index]["parent"][$row["ref_id"]]["type_title"] = $obj_type;
+                        }
                     }
                     break;
                 case "exc":
