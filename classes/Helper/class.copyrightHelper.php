@@ -1297,16 +1297,41 @@ class copyrightHelper
                     foreach ($mediaCastItems as $mediaCastItem) {
                         $mcst_item = new ilNewsItem($mediaCastItem["id"]);
                         $mob = new ilObjMediaObject($mcst_item->getMobId());
-                        $mediaItems = $mob->getMediaItems();
+                        if ($mob->getOwner() == $a_user_id) {
 
-                        foreach ($mediaItems as $mediaItem) {
-                            if ($mediaItem->getLocationType() !== "Reference") {
-                                $array_index = $mob->getId() . ":" . $mediaItem->getId() . ":" . "mob_" . $mediaItem->getPurpose();
-                                $file_list[$array_index]["title"] = $mediaItem->getlocation();
+                            $mediaItems = $mob->getMediaItems();
+
+                            foreach ($mediaItems as $mediaItem) {
+                                if ($mediaItem->getLocationType() !== "Reference") {
+                                    $array_index = $mob->getId() . ":" . $mediaItem->getId() . ":" . "mob_" . $mediaItem->getPurpose();
+                                    $file_list[$array_index]["title"] = $mediaItem->getlocation();
+                                    $file_list[$array_index]["option_id"] = self::_getCopyRightValue(
+                                        $mob->getId(),
+                                        $mediaItem->getId(),
+                                        "mob_" . $mediaItem->getPurpose());
+                                    $file_list[$array_index]["used_in"] .= "<li>" . $obj_type . " (" .
+                                        self::_buildPath(
+                                            $tree,
+                                            $row["ref_id"],
+                                            "",
+                                            true) .
+                                        " &raquo; " . $mediaCastItem["title"] . " &raquo; " .
+                                        $mediaItem->getPurpose() . ")</li>";
+                                    $file_list[$array_index]["parent"][$row["ref_id"]][$row["type"]] = $obj_type .
+                                        " (" . $row["title"] . ")";
+                                    $file_list[$array_index]["parent"][$row["ref_id"]]["type_title"] = $obj_type;
+                                }
+                            }
+
+                            $lng->loadLanguageModule("mcst");
+
+                            if ($mob->getVideoPreviewPic()) {
+                                $array_index = $mob->getId() . ":0:" . "mob_preview_pic";
+                                $file_list[$array_index]["title"] = $mob->getVideoPreviewPic(true);
                                 $file_list[$array_index]["option_id"] = self::_getCopyRightValue(
                                     $mob->getId(),
-                                    $mediaItem->getId(),
-                                    "mob_" . $mediaItem->getPurpose());
+                                    0,
+                                    "mob_preview_pic");
                                 $file_list[$array_index]["used_in"] .= "<li>" . $obj_type . " (" .
                                     self::_buildPath(
                                         $tree,
@@ -1314,33 +1339,11 @@ class copyrightHelper
                                         "",
                                         true) .
                                     " &raquo; " . $mediaCastItem["title"] . " &raquo; " .
-                                    $mediaItem->getPurpose() . ")</li>";
+                                    $lng->txt("mcst_preview_picture") . ")</li>";
                                 $file_list[$array_index]["parent"][$row["ref_id"]][$row["type"]] = $obj_type .
                                     " (" . $row["title"] . ")";
                                 $file_list[$array_index]["parent"][$row["ref_id"]]["type_title"] = $obj_type;
                             }
-                        }
-
-                        $lng->loadLanguageModule("mcst");
-
-                        if ($mob->getVideoPreviewPic()) {
-                            $array_index = $mob->getId() . ":0:" . "mob_preview_pic";
-                            $file_list[$array_index]["title"] = $mob->getVideoPreviewPic(true);
-                            $file_list[$array_index]["option_id"] = self::_getCopyRightValue(
-                                $mob->getId(),
-                                0,
-                                "mob_preview_pic");
-                            $file_list[$array_index]["used_in"] .= "<li>" . $obj_type . " (" .
-                                self::_buildPath(
-                                    $tree,
-                                    $row["ref_id"],
-                                    "",
-                                    true) .
-                                " &raquo; " . $mediaCastItem["title"] . " &raquo; " .
-                                $lng->txt("mcst_preview_picture") . ")</li>";
-                            $file_list[$array_index]["parent"][$row["ref_id"]][$row["type"]] = $obj_type .
-                                " (" . $row["title"] . ")";
-                            $file_list[$array_index]["parent"][$row["ref_id"]]["type_title"] = $obj_type;
                         }
                     }
                     break;
