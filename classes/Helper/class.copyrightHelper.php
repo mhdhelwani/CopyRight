@@ -1759,7 +1759,7 @@ class copyrightHelper
         $path = "";
         $path_full = $a_tree->getPathFull($a_ref_id);
 
-        if($path_full) {
+        if ($path_full) {
             foreach ($path_full as $data) {
                 if ($data["parent"] === "0" && !$a_with_root) {
                     continue;
