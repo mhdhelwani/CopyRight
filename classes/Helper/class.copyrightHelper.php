@@ -1068,24 +1068,26 @@ class copyrightHelper
                     }
                     break;
                 case "bibl":
-                    require_once "./Modules/Bibliographic/classes/class.ilObjBibliographic.php";
+                    if ($row["owner"] == $a_user_id) {
+                        require_once "./Modules/Bibliographic/classes/class.ilObjBibliographic.php";
 
-                    $biblObj = new ilObjBibliographic($row["obj_id"]);
-                    $array_index = $row["obj_id"] . ": :" . "bibl";
-                    $file_list[$array_index]["title"] = $biblObj->getFilename();
-                    $file_list[$array_index]["option_id"] = self::_getCopyRightValue(
-                        $row["obj_id"],
-                        null,
-                        "bibl");
-                    $file_list[$array_index]["used_in"] .= "<li>" . $obj_type . " (" .
-                        self::_buildPath(
-                            $tree,
-                            $row["ref_id"],
-                            "",
-                            true) . ")</li>";
-                    $file_list[$array_index]["parent"][$row["ref_id"]][$row["type"]] = $obj_type .
-                        " (" . $row["title"] . ")";
-                    $file_list[$array_index]["parent"][$row["ref_id"]]["type_title"] = $obj_type;
+                        $biblObj = new ilObjBibliographic($row["obj_id"]);
+                        $array_index = $row["obj_id"] . ": :" . "bibl";
+                        $file_list[$array_index]["title"] = $biblObj->getFilename();
+                        $file_list[$array_index]["option_id"] = self::_getCopyRightValue(
+                            $row["obj_id"],
+                            null,
+                            "bibl");
+                        $file_list[$array_index]["used_in"] .= "<li>" . $obj_type . " (" .
+                            self::_buildPath(
+                                $tree,
+                                $row["ref_id"],
+                                "",
+                                true) . ")</li>";
+                        $file_list[$array_index]["parent"][$row["ref_id"]][$row["type"]] = $obj_type .
+                            " (" . $row["title"] . ")";
+                        $file_list[$array_index]["parent"][$row["ref_id"]]["type_title"] = $obj_type;
+                    }
                     break;
                 case "book":
                     require_once "./Modules/BookingManager/classes/class.ilBookingObject.php";
@@ -1368,39 +1370,41 @@ class copyrightHelper
 
                             if (is_array($files) && count($files)) {
                                 $post = new ilForumPost($key);
-                                $parentPost = new ilForumPost($post->getParentId());
-                                $postPath = "";
-
-                                if ($parentPost->getSubject()) {
-                                    $postPath = $parentPost->getSubject();
-                                }
-
-                                while ($parentPost->getParentId() != 0) {
-                                    $parentPost = new ilForumPost($parentPost->getParentId());
+                                if ($post->isOwner($a_user_id)) {
+                                    $parentPost = new ilForumPost($post->getParentId());
+                                    $postPath = "";
 
                                     if ($parentPost->getSubject()) {
-                                        $postPath = $parentPost->getSubject() . " &raquo; " . $postPath;
+                                        $postPath = $parentPost->getSubject();
                                     }
-                                }
 
-                                foreach ($files as $file) {
-                                    $array_index = $row["obj_id"] . ":" . $key . ":" . "forum|" . $file["name"];
-                                    $file_list[$array_index]["title"] = $file["name"];
-                                    $file_list[$array_index]["option_id"] = self::_getCopyRightValue(
-                                        $row["obj_id"],
-                                        $key,
-                                        "forum|" . $file["name"]);
-                                    $file_list[$array_index]["used_in"] .= "<li>" . $obj_type . " (" .
-                                        self::_buildPath(
-                                            $tree,
-                                            $row["ref_id"],
-                                            "",
-                                            true) .
-                                        " &raquo; " . $thread->getSubject() . $postPath . " &raquo; " .
-                                        $post->getSubject() . ")</li>";
-                                    $file_list[$array_index]["parent"][$row["ref_id"]][$row["type"]] = $obj_type .
-                                        " (" . $row["title"] . ")";
-                                    $file_list[$array_index]["parent"][$row["ref_id"]]["type_title"] = $obj_type;
+                                    while ($parentPost->getParentId() != 0) {
+                                        $parentPost = new ilForumPost($parentPost->getParentId());
+
+                                        if ($parentPost->getSubject()) {
+                                            $postPath = $parentPost->getSubject() . " &raquo; " . $postPath;
+                                        }
+                                    }
+
+                                    foreach ($files as $file) {
+                                        $array_index = $row["obj_id"] . ":" . $key . ":" . "forum|" . $file["name"];
+                                        $file_list[$array_index]["title"] = $file["name"];
+                                        $file_list[$array_index]["option_id"] = self::_getCopyRightValue(
+                                            $row["obj_id"],
+                                            $key,
+                                            "forum|" . $file["name"]);
+                                        $file_list[$array_index]["used_in"] .= "<li>" . $obj_type . " (" .
+                                            self::_buildPath(
+                                                $tree,
+                                                $row["ref_id"],
+                                                "",
+                                                true) .
+                                            " &raquo; " . $thread->getSubject() . $postPath . " &raquo; " .
+                                            $post->getSubject() . ")</li>";
+                                        $file_list[$array_index]["parent"][$row["ref_id"]][$row["type"]] = $obj_type .
+                                            " (" . $row["title"] . ")";
+                                        $file_list[$array_index]["parent"][$row["ref_id"]]["type_title"] = $obj_type;
+                                    }
                                 }
                             }
                         }
