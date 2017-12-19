@@ -1759,12 +1759,14 @@ class copyrightHelper
         $path = "";
         $path_full = $a_tree->getPathFull($a_ref_id);
 
-        foreach ($path_full as $data) {
-            if ($data["parent"] === "0" && !$a_with_root) {
-                continue;
-            }
-            if ($a_ref_id != $data[$a_ref_node_name]) {
-                $path .= ($path ? " &raquo; " : "") . ($data["title"]);
+        if($path_full) {
+            foreach ($path_full as $data) {
+                if ($data["parent"] === "0" && !$a_with_root) {
+                    continue;
+                }
+                if ($a_ref_id != $data[$a_ref_node_name]) {
+                    $path .= ($path ? " &raquo; " : "") . ($data["title"]);
+                }
             }
         }
 
@@ -2183,8 +2185,9 @@ class copyrightHelper
             }
         }
 
-        require_once "Modules/TestQuestionPool/classes/class." . $question["type_tag"] . ".php";
+        require_once "./Modules/TestQuestionPool/classes/class.assQuestion.php";
 
+        assQuestion::_includeClass($question["type_tag"]);
         $questionObj = new $question["type_tag"]($question["question_id"]);
         $questionObj->loadFromDb($question["question_id"]);
         $questionSuggestion = $questionObj->getSuggestedSolution();
