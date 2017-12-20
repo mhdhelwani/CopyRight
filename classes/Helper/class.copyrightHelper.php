@@ -1258,30 +1258,32 @@ class copyrightHelper
                         $membersList = $exAssignmentObj->getMemberListData();
 
                         foreach ($membersList as $member) {
-                            require_once "./Modules/Exercise/classes/class.ilFSStorageExercise.php";
+                            if ($member["usr_id"] == $a_user_id) {
+                                require_once "./Modules/Exercise/classes/class.ilFSStorageExercise.php";
 
-                            $storage = new ilFSStorageExercise($exAssignmentObj->getExerciseId(), $exAssignmentObj->getId());
-                            $feed_back_files = $storage->getFeedbackFiles($member["usr_id"]);
+                                $storage = new ilFSStorageExercise($exAssignmentObj->getExerciseId(), $exAssignmentObj->getId());
+                                $feed_back_files = $storage->getFeedbackFiles($member["usr_id"]);
 
-                            foreach ($feed_back_files as $file) {
-                                $array_index = $row["obj_id"] . ":" . $exAssignment["id"] .
-                                    ":" . "ass_feedback|" . $file . "|" . $member["usr_id"];
-                                $file_list[$array_index]["title"] = $file;
-                                $file_list[$array_index]["option_id"] = self::_getCopyRightValue(
-                                    $row["obj_id"],
-                                    $exAssignment["id"],
-                                    "ass_feedback|" . $file . "|" . $member["usr_id"]);
-                                $file_list[$array_index]["used_in"] .= "<li>" . $obj_type . " (" . self::_buildPath(
-                                        $tree,
-                                        $row["ref_id"],
-                                        "",
-                                        true) .
-                                    " &raquo; " . $exAssignment["title"] . " &raquo; " .
-                                    $copyRightPlugin->txt("exc_fb_file") . " &raquo; " .
-                                    $member["name"] . "[" . $member["firstname"] . "]" . ")</li>";
-                                $file_list[$array_index]["parent"][$row["ref_id"]][$row["type"]] = $obj_type .
-                                    " (" . $row["title"] . ")";
-                                $file_list[$array_index]["parent"][$row["ref_id"]]["type_title"] = $obj_type;
+                                foreach ($feed_back_files as $file) {
+                                    $array_index = $row["obj_id"] . ":" . $exAssignment["id"] .
+                                        ":" . "ass_feedback|" . $file . "|" . $member["usr_id"];
+                                    $file_list[$array_index]["title"] = $file;
+                                    $file_list[$array_index]["option_id"] = self::_getCopyRightValue(
+                                        $row["obj_id"],
+                                        $exAssignment["id"],
+                                        "ass_feedback|" . $file . "|" . $member["usr_id"]);
+                                    $file_list[$array_index]["used_in"] .= "<li>" . $obj_type . " (" . self::_buildPath(
+                                            $tree,
+                                            $row["ref_id"],
+                                            "",
+                                            true) .
+                                        " &raquo; " . $exAssignment["title"] . " &raquo; " .
+                                        $copyRightPlugin->txt("exc_fb_file") . " &raquo; " .
+                                        $member["name"] . "[" . $member["firstname"] . "]" . ")</li>";
+                                    $file_list[$array_index]["parent"][$row["ref_id"]][$row["type"]] = $obj_type .
+                                        " (" . $row["title"] . ")";
+                                    $file_list[$array_index]["parent"][$row["ref_id"]]["type_title"] = $obj_type;
+                                }
                             }
                         }
                     }
