@@ -1679,7 +1679,11 @@ class copyrightHelper
         if ($a_content) {
             $file_ids = [];
             $doc = new DOMDocument();
-            $doc->loadXML($a_content);
+            try {
+                $doc->loadXML($a_content);
+            } catch (Exception $e) {
+                return [];
+            }
             $xpath = new DOMXPath($doc);
             // file items in file list
             $nodes = $xpath->query("//FileItem/Identifier");
