@@ -540,43 +540,45 @@ class copyrightHelper
                                     $file_list[$array_index]["parent"][$row["ref_id"]]["type_title"] = $obj_type;
                                 }
                             }
+                            try {
+                                $dir_files = iterator_to_array(new RecursiveIteratorIterator(
+                                    new RecursiveDirectoryIterator($mediaObject->getDataDirectory())));
 
-                            $dir_files = iterator_to_array(new RecursiveIteratorIterator(
-                                new RecursiveDirectoryIterator($mediaObject->getDataDirectory())));
+                                foreach ($dir_files as $f => $d) {
+                                    $pi = pathinfo($f);
 
-                            foreach ($dir_files as $f => $d) {
-                                $pi = pathinfo($f);
-
-                                if (!is_dir($f)) {
-                                    $sub_dir = str_replace(
-                                        "\\",
-                                        "/",
-                                        substr($pi["dirname"], strlen($mediaObject->getDataDirectory())));
-                                    $sub_dir = ($sub_dir ? $sub_dir : " ");
-                                    $array_index = $mediaObject->getId() . ": :" . "mob|" .
-                                        $pi["basename"] . "|" . $sub_dir;
-                                    $file_list[$array_index]["title"] = $pi["basename"];
-                                    $file_list[$array_index]["option_id"] = self::_getCopyRightValue(
-                                        $mediaObject->getId(),
-                                        0,
-                                        "mob|" . $pi["basename"] . "|" . $sub_dir);
-                                    $file_list[$array_index]["used_in"] .= "<li>" . $obj_type . " (" .
-                                        self::_buildPath(
-                                            $tree,
-                                            $row["ref_id"],
-                                            "",
-                                            true) .
-                                        " &raquo; " . $row["title"] . " &raquo; " .
-                                        self::_buildPath(
-                                            $mediaPoolTree,
-                                            $row_mep["mep_obj_id"],
-                                            "mep_obj_id",
-                                            false) .
-                                        str_replace("/", " &raquo; ", trim($sub_dir)) . ")</li>";
-                                    $file_list[$array_index]["parent"][$row["ref_id"]][$row["type"]] = $obj_type .
-                                        " (" . $row["title"] . ")";
-                                    $file_list[$array_index]["parent"][$row["ref_id"]]["type_title"] = $obj_type;
+                                    if (!is_dir($f)) {
+                                        $sub_dir = str_replace(
+                                            "\\",
+                                            "/",
+                                            substr($pi["dirname"], strlen($mediaObject->getDataDirectory())));
+                                        $sub_dir = ($sub_dir ? $sub_dir : " ");
+                                        $array_index = $mediaObject->getId() . ": :" . "mob|" .
+                                            $pi["basename"] . "|" . $sub_dir;
+                                        $file_list[$array_index]["title"] = $pi["basename"];
+                                        $file_list[$array_index]["option_id"] = self::_getCopyRightValue(
+                                            $mediaObject->getId(),
+                                            0,
+                                            "mob|" . $pi["basename"] . "|" . $sub_dir);
+                                        $file_list[$array_index]["used_in"] .= "<li>" . $obj_type . " (" .
+                                            self::_buildPath(
+                                                $tree,
+                                                $row["ref_id"],
+                                                "",
+                                                true) .
+                                            " &raquo; " . $row["title"] . " &raquo; " .
+                                            self::_buildPath(
+                                                $mediaPoolTree,
+                                                $row_mep["mep_obj_id"],
+                                                "mep_obj_id",
+                                                false) .
+                                            str_replace("/", " &raquo; ", trim($sub_dir)) . ")</li>";
+                                        $file_list[$array_index]["parent"][$row["ref_id"]][$row["type"]] = $obj_type .
+                                            " (" . $row["title"] . ")";
+                                        $file_list[$array_index]["parent"][$row["ref_id"]]["type_title"] = $obj_type;
+                                    }
                                 }
+                            } catch (Exception $e) {
                             }
                         }
                     }
@@ -827,33 +829,36 @@ class copyrightHelper
                     $lmsObj = new ilObjFileBasedLM($row["ref_id"]);
 
                     if ($lmsObj->getOwner() == $a_user_id) {
-                        $dir_files = iterator_to_array(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($lmsObj->getDataDirectory())));
+                        try {
+                            $dir_files = iterator_to_array(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($lmsObj->getDataDirectory())));
 
-                        foreach ($dir_files as $f => $d) {
-                            $pi = pathinfo($f);
+                            foreach ($dir_files as $f => $d) {
+                                $pi = pathinfo($f);
 
-                            if (!is_dir($f)) {
-                                $sub_dir = str_replace(
-                                    "\\",
-                                    "/",
-                                    substr($pi["dirname"], strlen($lmsObj->getDataDirectory())));
-                                $sub_dir = ($sub_dir ? $sub_dir : " ");
-                                $array_index = $row["obj_id"] . ": :" . "lms_html_file|" . $pi["basename"] . "|" . $sub_dir;
-                                $file_list[$array_index]["title"] = $pi["basename"];
-                                $file_list[$array_index]["option_id"] = self::_getCopyRightValue(
-                                    $row["obj_id"],
-                                    0,
-                                    "lms_html_file|" . $pi["basename"] . "|" . $sub_dir);
-                                $file_list[$array_index]["used_in"] .= "<li>" . $obj_type . " (" . self::_buildPath(
-                                        $tree,
-                                        $row["ref_id"],
-                                        "",
-                                        true) .
-                                    str_replace("/", " &raquo; ", trim($sub_dir)) . ")</li>";
-                                $file_list[$array_index]["parent"][$row["ref_id"]][$row["type"]] = $obj_type .
-                                    " (" . $row["title"] . ")";
-                                $file_list[$array_index]["parent"][$row["ref_id"]]["type_title"] = $obj_type;
+                                if (!is_dir($f)) {
+                                    $sub_dir = str_replace(
+                                        "\\",
+                                        "/",
+                                        substr($pi["dirname"], strlen($lmsObj->getDataDirectory())));
+                                    $sub_dir = ($sub_dir ? $sub_dir : " ");
+                                    $array_index = $row["obj_id"] . ": :" . "lms_html_file|" . $pi["basename"] . "|" . $sub_dir;
+                                    $file_list[$array_index]["title"] = $pi["basename"];
+                                    $file_list[$array_index]["option_id"] = self::_getCopyRightValue(
+                                        $row["obj_id"],
+                                        0,
+                                        "lms_html_file|" . $pi["basename"] . "|" . $sub_dir);
+                                    $file_list[$array_index]["used_in"] .= "<li>" . $obj_type . " (" . self::_buildPath(
+                                            $tree,
+                                            $row["ref_id"],
+                                            "",
+                                            true) .
+                                        str_replace("/", " &raquo; ", trim($sub_dir)) . ")</li>";
+                                    $file_list[$array_index]["parent"][$row["ref_id"]][$row["type"]] = $obj_type .
+                                        " (" . $row["title"] . ")";
+                                    $file_list[$array_index]["parent"][$row["ref_id"]]["type_title"] = $obj_type;
+                                }
                             }
+                        } catch (Exception $e) {
                         }
                     }
                     break;
@@ -2008,52 +2013,55 @@ class copyrightHelper
                         $used_file_names[] = $mediaItem->getLocation();
                     }
 
-                    $dir_files = iterator_to_array(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($mediaObject->getDataDirectory())));
+                    try {
+                        $dir_files = iterator_to_array(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($mediaObject->getDataDirectory())));
 
-                    foreach ($dir_files as $f => $d) {
-                        $pi = pathinfo($f);
+                        foreach ($dir_files as $f => $d) {
+                            $pi = pathinfo($f);
 
-                        if (!is_dir($f)) {
-                            $sub_dir = str_replace(
-                                "\\",
-                                "/",
-                                substr($pi["dirname"], strlen($mediaObject->getDataDirectory())));
+                            if (!is_dir($f)) {
+                                $sub_dir = str_replace(
+                                    "\\",
+                                    "/",
+                                    substr($pi["dirname"], strlen($mediaObject->getDataDirectory())));
 
-                            if ($sub_dir != "/overlays" &&
-                                !in_array(
-                                    trim(($sub_dir ? $sub_dir . "/" : "") . $pi["basename"], "/"),
-                                    $used_file_names)
-                            ) {
-                                $sub_dir = ($sub_dir ? $sub_dir : " ");
+                                if ($sub_dir != "/overlays" &&
+                                    !in_array(
+                                        trim(($sub_dir ? $sub_dir . "/" : "") . $pi["basename"], "/"),
+                                        $used_file_names)
+                                ) {
+                                    $sub_dir = ($sub_dir ? $sub_dir : " ");
 
-                                if ($build_path) {
-                                    $path = "<li>" . $obj_type . " (" . self::_buildPath(
-                                            $tree,
-                                            $row_ref_id,
-                                            "ref_id",
-                                            true) .
-                                        " &raquo; " . $row_title . " &raquo; " . $pageTitle .
-                                        " &raquo; " . $mediaObject->getTitle() .
-                                        str_replace("/", " &raquo; ", trim($sub_dir)) . ")</li>";
-                                } else {
-                                    $path = "<li>" . $pageTitle . " &raquo; " .
-                                        $mediaObject->getTitle() .
-                                        str_replace("/", " &raquo; ", trim($sub_dir)) . "</li>";
+                                    if ($build_path) {
+                                        $path = "<li>" . $obj_type . " (" . self::_buildPath(
+                                                $tree,
+                                                $row_ref_id,
+                                                "ref_id",
+                                                true) .
+                                            " &raquo; " . $row_title . " &raquo; " . $pageTitle .
+                                            " &raquo; " . $mediaObject->getTitle() .
+                                            str_replace("/", " &raquo; ", trim($sub_dir)) . ")</li>";
+                                    } else {
+                                        $path = "<li>" . $pageTitle . " &raquo; " .
+                                            $mediaObject->getTitle() .
+                                            str_replace("/", " &raquo; ", trim($sub_dir)) . "</li>";
+                                    }
+
+                                    $array_index = $mediaObject->getId() . ": :" . "mob|" . $pi["basename"] .
+                                        "|" . $sub_dir;
+                                    $a_file_list[$array_index]["title"] = $pi["basename"];
+                                    $a_file_list[$array_index]["option_id"] = self::_getCopyRightValue(
+                                        $mediaObject->getId(),
+                                        0,
+                                        "mob|" . $pi["basename"] . "|" . $sub_dir);
+                                    $a_file_list[$array_index]["used_in"] .= $path;
+                                    $a_file_list[$array_index]["parent"][$row_ref_id][$row_type] = $obj_type .
+                                        " (" . $row_title . ")";
+                                    $a_file_list[$array_index]["parent"][$row_ref_id]["type_title"] = $obj_type;
                                 }
-
-                                $array_index = $mediaObject->getId() . ": :" . "mob|" . $pi["basename"] .
-                                    "|" . $sub_dir;
-                                $a_file_list[$array_index]["title"] = $pi["basename"];
-                                $a_file_list[$array_index]["option_id"] = self::_getCopyRightValue(
-                                    $mediaObject->getId(),
-                                    0,
-                                    "mob|" . $pi["basename"] . "|" . $sub_dir);
-                                $a_file_list[$array_index]["used_in"] .= $path;
-                                $a_file_list[$array_index]["parent"][$row_ref_id][$row_type] = $obj_type .
-                                    " (" . $row_title . ")";
-                                $a_file_list[$array_index]["parent"][$row_ref_id]["type_title"] = $obj_type;
                             }
                         }
+                    } catch (Exception $e) {
                     }
                 } else {
                     $array_index = $row_file["obj_id"] . ":0:file";
