@@ -1,15 +1,15 @@
 <#1>
-<?php
-require_once('./Services/ActiveRecord/class.ActiveRecord.php');
+    <?php
+    require_once('./Services/ActiveRecord/class.ActiveRecord.php');
 
-require_once('./Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/CopyRight/classes/Entry/class.copyrightEntry.php');
-copyrightEntry::installDB();
+    require_once('./Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/CopyRight/classes/Entry/class.copyrightEntry.php');
+    copyrightEntry::installDB();
 
-require_once('./Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/CopyRight/classes/class.copyrightTranslation.php');
-copyrightTranslation::installDB();
+    require_once('./Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/CopyRight/classes/class.copyrightTranslation.php');
+    copyrightTranslation::installDB();
 
-?>
-<#2>
+    ?>
+    <#2>
 <?php
 if (!$ilDB->tableExists('copy_right_data')) {
     $fields = array(
@@ -27,8 +27,7 @@ if (!$ilDB->tableExists('copy_right_data')) {
             'type' => 'integer',
             'length' => 8,
             'notnull' => false
-        )
-        ,
+        ),
         'file_location' => array(
             'type' => 'text',
             'length' => 255,

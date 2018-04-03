@@ -19,6 +19,7 @@ msg_no_default_option#:#Keine Standardoption bestimmt!
 msg_wrong_default_option#:#Sie können nicht inaktive Option als Standaed speichern!
 msg_set_inactive#:#Sie können nicht Standaedoption als inaktive speichern!
 msg_no_permission#:#Sie können die Dateioption nict aktualisieren, die Sie nicht haben.
+msg_no_copyright_cron #:#Das CopyRightCron Plugin ist nicht aktiv. Bitte installieren und aktivieren Sie es.
 option_added#:#Option wurde hinzugefügt
 option_title#:#Titel
 option_updated#:#Option wurde aktualisiert

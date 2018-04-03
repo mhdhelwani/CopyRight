@@ -19,6 +19,7 @@ msg_no_default_option#:#No default option specified!
 msg_wrong_default_option#:#You can't set inactive option as default!
 msg_set_inactive#:#You can't set default option as inactive!
 msg_no_permission#:#You can't update file option that you don't have.
+msg_no_copyright_cron#:#The CopyRightCron plugin is not active. Please install and active it.
 option_added#:#Option added
 option_title#:#Title
 option_updated#:#Option updated

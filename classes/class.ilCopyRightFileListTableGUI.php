@@ -200,6 +200,17 @@ class ilCopyRightFileListTableGUI extends ilTable2GUI
                                 "ilias.php?baseClass=ilMailGUI",
                                 "", "", "_blank");
                             break;
+                        case "root":
+                            if ($key > 1) {
+                                $actions->addItem($lng->txt("show") . " " . $value1, "",
+                                    ilLink::_getLink($key, "file"),
+                                    "", "", "_blank");
+                            } else {
+                                $actions->addItem($lng->txt("show") . " " . $value1, "",
+                                    ilLink::_getLink($key, $key1),
+                                    "", "", "_blank");
+                            }
+                            break;
                         default:
                             $actions->addItem($lng->txt("show") . " " . $value1, "",
                                 ilLink::_getLink($key, $key1),
