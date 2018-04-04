@@ -8,8 +8,8 @@
     require_once('./Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/CopyRight/classes/class.copyrightTranslation.php');
     copyrightTranslation::installDB();
 
-    ?>
-    <#2>
+?>
+<#2>
 <?php
 if (!$ilDB->tableExists('copy_right_data')) {
     $fields = array(
